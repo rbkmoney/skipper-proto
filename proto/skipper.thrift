@@ -22,7 +22,6 @@ struct ChargebackCreationData {
     12: optional string            contact_email
     13: required base.ID           shop_id
     14: optional ChargebackReason  chargeback_reason
-    15: optional string            comment_for_merchant
 }
 
 struct ChargebackReason {
@@ -65,8 +64,9 @@ enum ChargebackStatus {
 }
 
 enum CommentOwnerType {
-    inner
-    outer
+    merchant
+    bank
+    processing
 }
 
 struct Comment {
