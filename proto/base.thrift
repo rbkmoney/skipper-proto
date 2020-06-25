@@ -9,4 +9,6 @@ typedef i32 Number
 
 typedef i32 Amount
 
+typedef string Currency
+
 typedef string Timestamp
