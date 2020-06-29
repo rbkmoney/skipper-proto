@@ -7,7 +7,7 @@ typedef base.ID ChargebackID
 
 typedef base.ID CrmTicket
 
-struct ChargebackCreationData {
+struct ChargebackGeneralData {
     1: required base.Timestamp     pretension_date
     2: required base.ID            acquirer_id
     3: required base.Timestamp     operation_date
@@ -22,6 +22,13 @@ struct ChargebackCreationData {
     12: optional string            contact_email
     13: required base.ID           shop_id
     14: optional ChargebackReason  chargeback_reason
+}
+
+struct ChargebackData {
+    1: required ChargebackGeneralData  general_data
+    2: required list<StatusChange>     status_shanges
+    3: optional list<Comment>          comments
+    4: required HoldStatus             hold_status
 }
 
 struct ChargebackReason {
@@ -81,13 +88,25 @@ exception ChargebackCreationException {}
 /** Service for work with chargebacks */
 service Skipper {
 
-    ChargebackID RetrievalRequest(1: ChargebackCreationData creation_data) throws (1: ChargebackCreationException ex1)
+    ChargebackID RetrievalRequest(1: ChargebackGeneralData creation_data) throws (1: ChargebackCreationException ex1)
 
-    ChargebackID CreateChargeback(1: ChargebackCreationData creation_data) throws (1: ChargebackCreationException ex1)
+    ChargebackID CreateChargeback(1: ChargebackGeneralData creation_data) throws (1: ChargebackCreationException ex1)
 
     void ChangeStatus(base.ID invoice_id, base.ID payment_id, StatusChange status_change)
 
+    void SetHoldStatus(base.ID invoice_id, base.ID payment_id, HoldStatus hold_status)
+
     void AddComment(base.ID invoice_id, base.ID payment_id, Comment comment)
+
+    ChargebackData getChargeback(base.ID invoice_id, base.ID payment_id)
+
+    list<ChargebackData> getChargebacksByStep(ChargebackStep step, ChargebackStatus status)
+
+    list<ChargebackData> getChargebacksByDate(base.Timestamp date_from, base.Timestamp date_to)
+
+    list<ChargebackData> getChargebacksByAcquirerId(string acquirer_id, list<ChargebackStatus> statuses)
+
+    CrmTicket CreateCrmTicket(ChargebackID chargeback_id)
 
     CrmTicket GetCrmTicketById(ChargebackID chargeback_id)
 
