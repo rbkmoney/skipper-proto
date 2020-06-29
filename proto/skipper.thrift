@@ -5,7 +5,7 @@ include "base.thrift"
 
 typedef base.ID ChargebackID
 
-typedef base.ID CrmTicket
+typedef base.ID CrmTicketID
 
 struct ChargebackGeneralData {
     1: required base.Timestamp     pretension_date
@@ -76,6 +76,17 @@ enum CommentOwnerType {
     processing
 }
 
+struct CrmTicket {
+    1: required CrmTicketID ticket_id
+    2: optional CrmTicketInfo ticket_info
+}
+
+struct CrmTicketInfo {
+    1: string comment
+    2: string label
+    3: string ticket_state
+}
+
 struct Comment {
     1: required string              message
     2: optional base.Timestamp      created_at
@@ -106,7 +117,7 @@ service Skipper {
 
     list<ChargebackData> getChargebacksByAcquirerId(string acquirer_id, list<ChargebackStatus> statuses)
 
-    CrmTicket CreateCrmTicket(ChargebackID chargeback_id)
+    CrmTicketID CreateCrmTicket(ChargebackID chargeback_id, CrmTicketInfo)
 
     CrmTicket GetCrmTicketById(ChargebackID chargeback_id)
 
