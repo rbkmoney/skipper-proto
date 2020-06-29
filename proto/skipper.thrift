@@ -117,7 +117,7 @@ service Skipper {
 
     list<ChargebackData> getChargebacksByAcquirerId(string acquirer_id, list<ChargebackStatus> statuses)
 
-    CrmTicketID CreateCrmTicket(ChargebackID chargeback_id, CrmTicketInfo)
+    CrmTicketID CreateCrmTicket(ChargebackID chargeback_id, CrmTicketInfo ticket_info)
 
     CrmTicket GetCrmTicketById(ChargebackID chargeback_id)
 
