@@ -16,7 +16,7 @@ struct ChargebackGeneralData {
     8: required base.Amount        amount
     9: required base.Currency      currency
     10: optional string            shop_url
-    11: optional string            patry_email
+    11: optional string            party_email
     12: optional string            contact_email
     13: required base.ID           shop_id
     14: optional ChargebackReason  chargeback_reason
@@ -84,9 +84,9 @@ struct ChargebackStatusChangeEvent {
 struct ChargebackHoldStatusChangeEvent {
     1: required base.ID            invoice_id
     2: required base.ID            payment_id
-    3: optional bool                will_hold_from_merchant
-    4: optional bool                was_hold_from_merchant
-    5: optional bool                hold_from_us
+    3: optional bool               will_hold_from_merchant
+    4: optional bool               was_hold_from_merchant
+    5: optional bool               hold_from_us
 }
 
 struct ChargebackData {
