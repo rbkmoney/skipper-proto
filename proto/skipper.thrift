@@ -13,13 +13,16 @@ struct ChargebackGeneralData {
     5: required base.ID            payment_id
     6: optional string             rrn
     7: optional string             masked_pan
-    8: required base.Amount        amount
-    9: required base.Currency      currency
-    10: optional string            shop_url
-    11: optional string            party_email
-    12: optional string            contact_email
-    13: required base.ID           shop_id
-    14: optional ChargebackReason  chargeback_reason
+    8: required base.Amount        levy_amount
+    9: optional base.Amount        body_amount
+    10: required base.Currency     currency
+    11: optional string            shop_url
+    12: optional string            party_email
+    13: optional string            contact_email
+    14: required base.ID           shop_id
+    15: required base.ID           external_id
+    16: optional ChargebackReason  chargeback_reason
+    17: optional base.Content      content;
 }
 
 struct ChargebackReason {
@@ -57,10 +60,23 @@ union ChargebackStatus {
 }
 
 struct ChargebackPending   {}
-struct ChargebackAccepted  {}
-struct ChargebackRejected  {}
+
+struct ChargebackAccepted  {
+    1: optional base.Amount        levy_amount
+    2: optional base.Amount        body_amount
+}
+
+struct ChargebackRejected  {
+    1: optional base.Amount        levy_amount
+}
+
 struct ChargebackCancelled {}
 
+struct ChargebackReopen {
+    1: optional base.Amount        levy_amount
+    2: optional base.Amount        body_amount
+    3: required ChargebackStage    reopen_stage
+}
 
 union ChargebackEvent {
     1: ChargebackCreateEvent           create_event
@@ -73,8 +89,8 @@ struct ChargebackCreateEvent {
 }
 
 struct ChargebackStatusChangeEvent {
-    1: required base.ID            invoice_id
-    2: required base.ID            payment_id
+    1: required base.ID             invoice_id
+    2: required base.ID             payment_id
     3: required ChargebackStage     stage
     4: required ChargebackStatus    status
     5: optional base.Timestamp      created_at

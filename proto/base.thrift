@@ -12,3 +12,8 @@ typedef i32 Amount
 typedef string Currency
 
 typedef string Timestamp
+
+struct Content {
+    1: required string type
+    2: required binary data
+}
