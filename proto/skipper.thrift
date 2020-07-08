@@ -22,7 +22,7 @@ struct ChargebackGeneralData {
     14: required base.ID           shop_id
     15: required base.ID           external_id
     16: optional ChargebackReason  chargeback_reason
-    17: optional base.Content      content;
+    17: optional base.Content      content
 }
 
 struct ChargebackReason {
@@ -110,20 +110,18 @@ struct ChargebackData {
     2: required list<ChargebackEvent>  events
 }
 
-exception ChargebackCreationException {}
-
 /** Service for work with chargebacks */
 service Skipper {
 
     void processChargebackData(1: ChargebackEvent event)
 
-    ChargebackData getChargebackData(base.ID invoice_id, base.ID payment_id)
+    ChargebackData getChargebackData(1: base.ID invoice_id, 2: base.ID payment_id)
 
-    list<ChargebackData> getChargebacksByStep(ChargebackStage step, ChargebackStatus status)
+    list<ChargebackData> getChargebacksByStep(1: ChargebackStage step, 2: ChargebackStatus status)
 
-    list<ChargebackData> getChargebacksByDate(base.Timestamp date_from, base.Timestamp date_to)
+    list<ChargebackData> getChargebacksByDate(1: base.Timestamp date_from, 2: base.Timestamp date_to)
 
-    list<ChargebackData> getChargebacksByProviderId(string provider_id, list<ChargebackStatus> statuses)
+    list<ChargebackData> getChargebacksByProviderId(1: string provider_id, 2: list<ChargebackStatus> statuses)
 
 }
 
