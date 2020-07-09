@@ -23,6 +23,7 @@ struct ChargebackGeneralData {
     15: required base.ID           external_id
     16: optional ChargebackReason  chargeback_reason
     17: optional base.Content      content
+    18: required bool              retrieval_request
 }
 
 struct ChargebackReason {
@@ -57,6 +58,7 @@ union ChargebackStatus {
     2: ChargebackAccepted  accepted
     3: ChargebackRejected  rejected
     4: ChargebackCancelled cancelled
+    5: ChargebackReopen    reopen
 }
 
 struct ChargebackPending   {}
@@ -68,6 +70,7 @@ struct ChargebackAccepted  {
 
 struct ChargebackRejected  {
     1: optional base.Amount        levy_amount
+    2: optional base.Amount        body_amount
 }
 
 struct ChargebackCancelled {}
@@ -76,6 +79,7 @@ struct ChargebackReopen {
     1: optional base.Amount        levy_amount
     2: optional base.Amount        body_amount
     3: required ChargebackStage    reopen_stage
+    4: optional ChargebackStatus   status
 }
 
 union ChargebackEvent {
@@ -85,7 +89,9 @@ union ChargebackEvent {
 }
 
 struct ChargebackCreateEvent {
-    1: required ChargebackGeneralData creation_data
+    1: required ChargebackGeneralData           creation_data
+    2: optional ChargebackStatusChangeEvent     status_change_event
+    3: optional ChargebackHoldStatusChangeEvent hold_status_change_event
 }
 
 struct ChargebackStatusChangeEvent {
@@ -100,9 +106,10 @@ struct ChargebackStatusChangeEvent {
 struct ChargebackHoldStatusChangeEvent {
     1: required base.ID            invoice_id
     2: required base.ID            payment_id
-    3: optional bool               will_hold_from_merchant
-    4: optional bool               was_hold_from_merchant
-    5: optional bool               hold_from_us
+    3: optional base.Timestamp     created_at
+    4: optional bool               will_hold_from_merchant
+    5: optional bool               was_hold_from_merchant
+    6: optional bool               hold_from_us
 }
 
 struct ChargebackData {
