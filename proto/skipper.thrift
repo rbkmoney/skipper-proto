@@ -49,8 +49,9 @@ struct ChargebackStatusChangeEvent {
     1: required base.ID                       invoice_id
     2: required base.ID                       payment_id
     3: required chargeback.ChargebackStatus   status
-    4: required base.Timestamp                created_at
-    5: optional base.Timestamp                date_of_decision
+    4: required chargeback.ChargebackStage    stage
+    5: required base.Timestamp                created_at
+    6: optional base.Timestamp                date_of_decision
 }
 
 struct ChargebackHoldStatusChangeEvent {
