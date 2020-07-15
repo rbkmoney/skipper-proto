@@ -98,9 +98,9 @@ service Skipper {
 
     void processChargebackData(1: ChargebackEvent event)
 
-    ChargebackData getChargebackData(1: base.ID invoice_id, 2: base.ID payment_id)
+    ChargebackData getChargebackData(1: base.ID invoice_id, 2: base.ID payment_id, 3: base.ID chargeback_id)
 
-    ChargebackData getRetrievalRequestData(1: base.ID invoice_id, 2: base.ID payment_id)
+    ChargebackData getRetrievalRequestData(1: base.ID invoice_id, 2: base.ID payment_id, 3: base.ID chargeback_id)
 
     list<ChargebackData> getChargebacks(1: ChargebackFilter filter)
 
