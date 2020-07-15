@@ -12,19 +12,20 @@ struct ChargebackGeneralData {
     3: required base.Timestamp     operation_date
     4: required base.ID            invoice_id
     5: required base.ID            payment_id
-    6: optional string             rrn
-    7: optional string             masked_pan
-    8: required base.Amount        levy_amount
-    9: optional base.Amount        body_amount
-    10: required base.Currency     currency
-    11: optional string            shop_url
-    12: optional string            party_email
-    13: optional string            contact_email
-    14: required base.ID           shop_id
-    15: required base.ID           external_id
-    16: optional ChargebackReason  chargeback_reason
-    17: optional base.Content      content
-    18: required bool              retrieval_request
+    6: required base.ID            chargeback_id
+    7: optional string             rrn
+    8: optional string             masked_pan
+    9: required base.Amount        levy_amount
+    10: optional base.Amount       body_amount
+    11: required base.Currency     currency
+    12: optional string            shop_url
+    13: optional string            party_email
+    14: optional string            contact_email
+    15: required base.ID           shop_id
+    16: required base.ID           external_id
+    17: optional ChargebackReason  chargeback_reason
+    18: optional base.Content      content
+    19: required bool              retrieval_request
 }
 
 struct ChargebackReason {
@@ -48,17 +49,19 @@ struct ChargebackCreateEvent {
 struct ChargebackStatusChangeEvent {
     1: required base.ID                       invoice_id
     2: required base.ID                       payment_id
-    3: required chargeback.ChargebackStatus   status
-    4: optional chargeback.ChargebackStage    stage
-    5: required base.Timestamp                created_at
-    6: optional base.Timestamp                date_of_decision
+    3: required base.ID                       chargeback_id
+    4: required chargeback.ChargebackStatus   status
+    5: optional chargeback.ChargebackStage    stage
+    6: required base.Timestamp                created_at
+    7: optional base.Timestamp                date_of_decision
 }
 
 struct ChargebackHoldStatusChangeEvent {
     1: required base.ID              invoice_id
     2: required base.ID              payment_id
-    3: required base.Timestamp       created_at
-    4: required ChargebackHoldStatus hold_status
+    3: required base.ID              chargeback_id
+    4: required base.Timestamp       created_at
+    5: required ChargebackHoldStatus hold_status
 }
 
 struct ChargebackHoldStatus {
@@ -70,10 +73,11 @@ struct ChargebackHoldStatus {
 struct ChargebackReopenEvent {
     1: required base.ID                     invoice_id
     2: required base.ID                     payment_id
-    3: required base.Timestamp              created_at
-    4: optional base.Amount                 levy_amount
-    5: optional base.Amount                 body_amount
-    6: optional chargeback.ChargebackStage  reopen_stage
+    3: required base.ID                     chargeback_id
+    4: required base.Timestamp              created_at
+    5: optional base.Amount                 levy_amount
+    6: optional base.Amount                 body_amount
+    7: optional chargeback.ChargebackStage  reopen_stage
 }
 
 struct ChargebackData {
