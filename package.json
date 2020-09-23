@@ -1,0 +1,9 @@
+{
+  "name": "skipper-proto",
+  "version": "1.0.0",
+  "description": "Протокол для сервиса работы с чарджбэками",
+  "author": "rbk.money",
+  "private": true,
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/rbkmoney/skipper-proto#readme"
+}
